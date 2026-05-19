@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.liftlog.data.AppDatabase;
 import com.example.liftlog.data.model.WorkoutSession;
+import com.example.liftlog.data.repository.SessionSetRepository;
 import com.example.liftlog.data.repository.WorkoutSessionRepository;
 
 public class DashboardViewModel extends AndroidViewModel {
@@ -26,11 +27,13 @@ public class DashboardViewModel extends AndroidViewModel {
     }
 
     private final WorkoutSessionRepository repository;
+    private final SessionSetRepository setRepository;
     private final MutableLiveData<LastWorkout> lastWorkout = new MutableLiveData<>(null);
 
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         repository = new WorkoutSessionRepository(application);
+        setRepository = new SessionSetRepository(application);
     }
 
     public LiveData<LastWorkout> getLastWorkout() {
@@ -44,7 +47,7 @@ public class DashboardViewModel extends AndroidViewModel {
                 lastWorkout.postValue(null);
                 return;
             }
-            float volume = repository.getTotalVolumeForSession(last.id);
+            float volume = setRepository.getTotalVolumeForSession(last.id);
             lastWorkout.postValue(new LastWorkout(last.date, last.durationMinutes, volume));
         });
     }

@@ -94,7 +94,8 @@ public class SummaryViewModel extends AndroidViewModel {
             for (Map.Entry<Integer, Float> e : maxPerExercise.entrySet()) {
                 float sessionMax = e.getValue();
                 if (sessionMax <= 0f) continue;
-                float globalMax = setDao.getPersonalRecord(e.getKey());
+                Float globalMaxBoxed = setDao.getPersonalRecord(e.getKey());
+                float globalMax = globalMaxBoxed != null ? globalMaxBoxed : 0f;
                 // Backend liczy globalny max łącznie z bieżącą sesją (= sessionMax po zapisie).
                 // Jeśli equals — to znaczy, że obecna sesja ustanowiła lub wyrównała rekord.
                 if (sessionMax >= globalMax) {

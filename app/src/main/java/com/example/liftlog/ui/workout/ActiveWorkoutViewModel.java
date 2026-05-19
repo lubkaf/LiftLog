@@ -71,6 +71,10 @@ public class ActiveWorkoutViewModel extends AndroidViewModel {
         initialized = true;
         this.planId = planId;
         AppDatabase.DB_EXECUTOR.execute(() -> {
+            // Po zmianie w ActiveWorkoutManager startWorkout jest no-op gdy isActive==true.
+            // Wyczyszczamy stan na wszelki wypadek — jeśli poprzedni trening został porzucony
+            // (np. force-close apki), nowa sesja musi zacząć się od zera.
+            manager.discardWorkout();
             if (planId > 0) {
                 TrainingPlan plan = db.trainingPlanDao().getById(planId);
                 manager.startWorkout(plan);

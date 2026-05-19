@@ -9,6 +9,7 @@ import androidx.lifecycle.MediatorLiveData;
 
 import com.example.liftlog.data.AppDatabase;
 import com.example.liftlog.data.model.WorkoutSession;
+import com.example.liftlog.data.repository.SessionSetRepository;
 import com.example.liftlog.data.repository.WorkoutSessionRepository;
 
 import java.util.ArrayList;
@@ -18,12 +19,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HistoryViewModel extends AndroidViewModel {
 
     private final WorkoutSessionRepository repository;
+    private final SessionSetRepository setRepository;
     private final MediatorLiveData<List<HistoryItem>> items = new MediatorLiveData<>();
     private final AtomicInteger generation = new AtomicInteger(0);
 
     public HistoryViewModel(@NonNull Application application) {
         super(application);
         repository = new WorkoutSessionRepository(application);
+        setRepository = new SessionSetRepository(application);
         LiveData<List<WorkoutSession>> source = repository.getAllSessions();
         items.addSource(source, this::recompute);
     }
@@ -42,7 +45,7 @@ public class HistoryViewModel extends AndroidViewModel {
         AppDatabase.DB_EXECUTOR.execute(() -> {
             List<HistoryItem> result = new ArrayList<>(snapshot.size());
             for (WorkoutSession s : snapshot) {
-                float vol = repository.getTotalVolumeForSession(s.id);
+                float vol = setRepository.getTotalVolumeForSession(s.id);
                 result.add(new HistoryItem(s.id, s.date, s.durationMinutes, vol));
             }
             if (gen == generation.get()) {

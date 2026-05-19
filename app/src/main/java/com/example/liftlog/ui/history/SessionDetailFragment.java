@@ -135,7 +135,7 @@ public class SessionDetailFragment extends Fragment {
         List<String> dateLabels = new ArrayList<>(data.size());
         for (int i = 0; i < data.size(); i++) {
             WeightDateTuple t = data.get(i);
-            entries.add(new Entry(i, t.weight_kg));
+            entries.add(new Entry(i, t.weightKg));
             dateLabels.add(formatShortDate(t.date));
         }
 
