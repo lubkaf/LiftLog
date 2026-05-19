@@ -10,6 +10,7 @@ import com.example.liftlog.data.dao.TrainingPlanDao;
 import com.example.liftlog.data.model.PlanExercise;
 import com.example.liftlog.data.model.TrainingPlan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrainingPlanRepository {
@@ -51,10 +52,17 @@ public class TrainingPlanRepository {
                 planId = plan.id;
             }
             planExerciseDao.deleteAllForPlan((int) planId);
+            List<PlanExercise> copies = new ArrayList<>(exercises.size());
             for (PlanExercise pe : exercises) {
-                pe.planId = (int) planId;
+                PlanExercise copy = new PlanExercise();
+                copy.exerciseId = pe.exerciseId;
+                copy.sets = pe.sets;
+                copy.reps = pe.reps;
+                copy.orderIndex = pe.orderIndex;
+                copy.planId = (int) planId;
+                copies.add(copy);
             }
-            planExerciseDao.insertAll(exercises);
+            planExerciseDao.insertAll(copies);
         }));
     }
 

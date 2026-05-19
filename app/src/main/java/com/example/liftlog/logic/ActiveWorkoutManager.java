@@ -40,6 +40,7 @@ public class ActiveWorkoutManager {
     }
 
     public void startWorkout(TrainingPlan plan) {
+        if (isActive) return; // nie nadpisuj trwającego treningu
         activePlanId = (plan != null) ? plan.id : null;
         startTimeMillis = System.currentTimeMillis();
         pendingSets.clear();
