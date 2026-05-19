@@ -9,7 +9,7 @@ Mobilna aplikacja na system Android do śledzenia postępów siłowych na siłow
 | Członek | Obszar |
 |--------|--------|
 | lubkaf | Backend / Baza danych (Room, logika sesji) |
-| jana | Frontend / UI (ekrany, nawigacja, wykresy) |
+| antczakj | Frontend / UI (ekrany, nawigacja, wykresy) |
 | bogdans | Integracja API, biblioteka ćwiczeń, dokumentacja |
 
 ---
