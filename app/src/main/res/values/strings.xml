@@ -1,3 +1,129 @@
 <resources>
     <string name="app_name">LiftLog</string>
+
+    <!-- Nawigacja -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_history">Historia</string>
+    <string name="nav_library">Biblioteka</string>
+    <string name="nav_one_rm">Kalkulator 1RM</string>
+
+    <!-- Wspólne -->
+    <string name="common_kg">kg</string>
+    <string name="common_reps">powt.</string>
+    <string name="common_save">Zapisz</string>
+    <string name="common_cancel">Anuluj</string>
+    <string name="common_delete">Usuń</string>
+    <string name="common_edit">Edytuj</string>
+    <string name="common_ok">OK</string>
+    <string name="common_start">Start</string>
+    <string name="common_back">Wstecz</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_greeting">Cześć! Gotów na trening?</string>
+    <string name="dashboard_last_workout">Ostatni trening</string>
+    <string name="dashboard_no_workouts_yet">Brak treningów. Zacznij swój pierwszy!</string>
+    <string name="dashboard_last_workout_summary">%1$s · wolumen %2$.0f kg · %3$d min</string>
+    <string name="dashboard_quick_start">Szybki start</string>
+    <string name="dashboard_plans">Plany treningowe</string>
+    <string name="dashboard_history">Historia</string>
+    <string name="dashboard_library">Biblioteka ćwiczeń</string>
+    <string name="dashboard_one_rm">Kalkulator 1RM</string>
+
+    <!-- Plany -->
+    <string name="plans_title">Plany treningowe</string>
+    <string name="plans_add">Nowy plan</string>
+    <string name="plans_empty">Brak planów. Utwórz pierwszy.</string>
+    <string name="plans_action_edit">Edytuj</string>
+    <string name="plans_action_start">Start</string>
+    <string name="plans_action_delete">Usuń</string>
+    <string name="plans_new_plan_title">Nowy plan</string>
+    <string name="plans_new_plan_hint">Nazwa planu</string>
+    <string name="plans_delete_confirm">Usunąć plan \"%1$s\"?</string>
+
+    <!-- Edycja planu -->
+    <string name="planedit_title_new">Nowy plan</string>
+    <string name="planedit_title_edit">Edycja planu</string>
+    <string name="planedit_name_hint">Nazwa planu</string>
+    <string name="planedit_add_exercise">+ Dodaj ćwiczenie</string>
+    <string name="planedit_empty">Plan jest pusty. Dodaj ćwiczenie.</string>
+    <string name="planedit_sets_hint">Serie</string>
+    <string name="planedit_reps_hint">Powtórzenia</string>
+    <string name="planedit_save_error">Podaj nazwę planu i dodaj co najmniej jedno ćwiczenie</string>
+
+    <!-- Aktywny trening -->
+    <string name="workout_title">Trening</string>
+    <string name="workout_weight_hint">Ciężar (kg)</string>
+    <string name="workout_reps_hint">Powtórzenia</string>
+    <string name="workout_save_set">Zapisz serię</string>
+    <string name="workout_next_exercise">Następne ćwiczenie</string>
+    <string name="workout_finish">Zakończ trening</string>
+    <string name="workout_set_x_of_y">Seria %1$d z %2$d</string>
+    <string name="workout_select_exercise">Wybierz ćwiczenie</string>
+    <string name="workout_select_exercise_hint">Brak planu – wybierz ćwiczenie z biblioteki</string>
+    <string name="workout_finish_dialog_title">Zakończ trening</string>
+    <string name="workout_finish_dialog_notes">Notatki do sesji (opcjonalnie)</string>
+    <string name="workout_rest_label">Odpoczynek</string>
+    <string name="workout_rest_60">60 s</string>
+    <string name="workout_rest_90">90 s</string>
+    <string name="workout_rest_120">120 s</string>
+    <string name="workout_rest_format">%1$d s</string>
+    <string name="workout_no_exercises">Brak ćwiczeń w planie</string>
+    <string name="workout_validation_error">Wpisz poprawny ciężar i powtórzenia</string>
+    <string name="workout_done_sets">Zapisane serie</string>
+
+    <!-- Podsumowanie -->
+    <string name="summary_title">Podsumowanie</string>
+    <string name="summary_volume">Wolumen</string>
+    <string name="summary_volume_value">%1$.0f kg</string>
+    <string name="summary_duration">Czas trwania</string>
+    <string name="summary_duration_value">%1$d min</string>
+    <string name="summary_sets">Liczba serii</string>
+    <string name="summary_personal_records">Rekordy osobiste</string>
+    <string name="summary_no_records">Brak nowych rekordów w tej sesji</string>
+    <string name="summary_pr_item">%1$s — %2$.1f kg</string>
+    <string name="summary_back_to_dashboard">Wróć do Dashboardu</string>
+    <string name="summary_no_session">Brak danych sesji</string>
+
+    <!-- Historia -->
+    <string name="history_title">Historia treningów</string>
+    <string name="history_empty">Brak zapisanych treningów</string>
+    <string name="history_item_format">%1$s · %2$d min · wolumen %3$.0f kg</string>
+
+    <!-- Szczegóły sesji -->
+    <string name="session_detail_title">Szczegóły sesji</string>
+    <string name="session_detail_select_exercise">Ćwiczenie:</string>
+    <string name="session_detail_chart_title">Postęp wagi (wszystkie sesje)</string>
+    <string name="session_detail_no_data">Brak danych do wykresu</string>
+    <string name="session_detail_set_format">Seria %1$d: %2$.1f kg × %3$d</string>
+
+    <!-- Biblioteka -->
+    <string name="library_title">Biblioteka ćwiczeń</string>
+    <string name="library_filter_label">Grupa:</string>
+    <string name="library_filter_all">Wszystkie</string>
+    <string name="library_add_custom">+ Dodaj własne</string>
+    <string name="library_custom_badge">własne</string>
+    <string name="library_picker_title">Wybierz ćwiczenie</string>
+    <string name="library_fetch_from_api">↓ Pobierz z ExerciseDB</string>
+    <string name="library_fetch_disabled_tooltip">Wymaga konfiguracji API (TODO bogdans)</string>
+
+    <!-- Dialog dodawania ćwiczenia -->
+    <string name="add_exercise_title">Nowe ćwiczenie</string>
+    <string name="add_exercise_name_hint">Nazwa</string>
+    <string name="add_exercise_group_hint">Grupa mięśniowa</string>
+    <string name="add_exercise_description_hint">Opis (opcjonalnie)</string>
+
+    <!-- Kalkulator 1RM -->
+    <string name="onerm_title">Kalkulator 1RM</string>
+    <string name="onerm_weight_hint">Ciężar (kg)</string>
+    <string name="onerm_reps_hint">Powtórzenia</string>
+    <string name="onerm_formula_label">Formuła:</string>
+    <string name="onerm_brzycki">Brzycki</string>
+    <string name="onerm_epley">Epley</string>
+    <string name="onerm_lander">Lander</string>
+    <string name="onerm_calculate">Oblicz</string>
+    <string name="onerm_result_format">Szacowane 1RM: %1$.1f kg</string>
+    <string name="onerm_result_placeholder">Wpisz dane i kliknij Oblicz</string>
+    <string name="onerm_use_api">Użyj API Ninjas (zewnętrzne)</string>
+    <string name="onerm_api_disabled_hint">API niedostępne — TODO bogdans</string>
+    <string name="onerm_validation_error">Wpisz poprawny ciężar i powtórzenia (1–20)</string>
 </resources>

@@ -36,7 +36,7 @@ import java.util.concurrent.Executors;
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
-    static final ExecutorService DB_EXECUTOR = Executors.newSingleThreadExecutor();
+    public static final ExecutorService DB_EXECUTOR = Executors.newSingleThreadExecutor();
 
     public abstract ExerciseDao exerciseDao();
     public abstract TrainingPlanDao trainingPlanDao();

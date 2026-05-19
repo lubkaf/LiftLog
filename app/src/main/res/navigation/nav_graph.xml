@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.liftlog.ui.dashboard.DashboardFragment"
+        android:label="@string/nav_dashboard"
+        tools:layout="@layout/fragment_dashboard"
+        xmlns:tools="http://schemas.android.com/tools">
+        <action
+            android:id="@+id/action_dashboard_to_plans"
+            app:destination="@id/plansFragment" />
+        <action
+            android:id="@+id/action_dashboard_to_history"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_dashboard_to_library"
+            app:destination="@id/libraryFragment" />
+        <action
+            android:id="@+id/action_dashboard_to_oneRm"
+            app:destination="@id/oneRmFragment" />
+        <action
+            android:id="@+id/action_dashboard_to_activeWorkout"
+            app:destination="@id/activeWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/plansFragment"
+        android:name="com.example.liftlog.ui.plans.PlansFragment"
+        android:label="@string/plans_title"
+        tools:layout="@layout/fragment_plans"
+        xmlns:tools="http://schemas.android.com/tools">
+        <action
+            android:id="@+id/action_plans_to_planEdit"
+            app:destination="@id/planEditFragment" />
+        <action
+            android:id="@+id/action_plans_to_activeWorkout"
+            app:destination="@id/activeWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/planEditFragment"
+        android:name="com.example.liftlog.ui.planedit.PlanEditFragment"
+        android:label="@string/planedit_title_edit"
+        tools:layout="@layout/fragment_plan_edit"
+        xmlns:tools="http://schemas.android.com/tools">
+        <argument
+            android:name="planId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_planEdit_to_libraryPicker"
+            app:destination="@id/libraryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/activeWorkoutFragment"
+        android:name="com.example.liftlog.ui.workout.ActiveWorkoutFragment"
+        android:label="@string/workout_title"
+        tools:layout="@layout/fragment_active_workout"
+        xmlns:tools="http://schemas.android.com/tools">
+        <argument
+            android:name="planId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_activeWorkout_to_summary"
+            app:destination="@id/summaryFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/summaryFragment"
+        android:name="com.example.liftlog.ui.summary.SummaryFragment"
+        android:label="@string/summary_title"
+        tools:layout="@layout/fragment_summary"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.liftlog.ui.history.HistoryFragment"
+        android:label="@string/history_title"
+        tools:layout="@layout/fragment_history"
+        xmlns:tools="http://schemas.android.com/tools">
+        <action
+            android:id="@+id/action_history_to_sessionDetail"
+            app:destination="@id/sessionDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sessionDetailFragment"
+        android:name="com.example.liftlog.ui.history.SessionDetailFragment"
+        android:label="@string/session_detail_title"
+        tools:layout="@layout/fragment_session_detail"
+        xmlns:tools="http://schemas.android.com/tools">
+        <argument
+            android:name="sessionId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.example.liftlog.ui.library.LibraryFragment"
+        android:label="@string/library_title"
+        tools:layout="@layout/fragment_library"
+        xmlns:tools="http://schemas.android.com/tools">
+        <argument
+            android:name="pickerMode"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/oneRmFragment"
+        android:name="com.example.liftlog.ui.onerm.OneRmFragment"
+        android:label="@string/onerm_title"
+        tools:layout="@layout/fragment_one_rm"
+        xmlns:tools="http://schemas.android.com/tools" />
+</navigation>

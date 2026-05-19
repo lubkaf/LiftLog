@@ -7,6 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +27,25 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        if (navHost == null) return;
+        NavController navController = navHost.getNavController();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+
+        Set<Integer> topLevel = new HashSet<>();
+        topLevel.add(R.id.dashboardFragment);
+        topLevel.add(R.id.historyFragment);
+        topLevel.add(R.id.libraryFragment);
+        topLevel.add(R.id.oneRmFragment);
+        NavigationUI.setupWithNavController(bottomNav, navController);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int id = destination.getId();
+            boolean visible = topLevel.contains(id);
+            bottomNav.setVisibility(visible ? android.view.View.VISIBLE : android.view.View.GONE);
         });
     }
 }
