@@ -39,12 +39,13 @@ public class SessionSetRepository {
         return dao.getWeightProgressForExercise(exerciseId);
     }
 
-    // Wywoływać tylko z wątku tła
     public float getPersonalRecord(int exerciseId) {
-        return dao.getPersonalRecord(exerciseId);
+        Float result = dao.getPersonalRecord(exerciseId);
+        return result != null ? result : 0f;
     }
 
     public float getTotalVolumeForSession(int sessionId) {
-        return dao.getTotalVolumeForSession(sessionId);
+        Float result = dao.getTotalVolumeForSession(sessionId);
+        return result != null ? result : 0f;
     }
 }

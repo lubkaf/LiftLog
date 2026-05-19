@@ -34,13 +34,13 @@ public interface SessionSetDao {
     List<SessionSet> getSetsForSessionSync(int sessionId);
 
     @Query("SELECT MAX(weight_kg) FROM session_sets WHERE exercise_id = :exerciseId")
-    float getPersonalRecord(int exerciseId);
+    Float getPersonalRecord(int exerciseId);
 
     @Query("SELECT SUM(weight_kg * reps_done) FROM session_sets WHERE session_id = :sessionId")
-    float getTotalVolumeForSession(int sessionId);
+    Float getTotalVolumeForSession(int sessionId);
 
     @Query("SELECT MAX(weight_kg) FROM session_sets WHERE exercise_id = :exerciseId AND session_id = :sessionId")
-    float getMaxWeightInSession(int exerciseId, int sessionId);
+    Float getMaxWeightInSession(int exerciseId, int sessionId);
 
     @Query("SELECT ss.weight_kg, ws.date FROM session_sets ss " +
            "JOIN workout_sessions ws ON ss.session_id = ws.id " +

@@ -1,6 +1,9 @@
 package com.example.liftlog.data.model;
 
+import androidx.room.ColumnInfo;
+
 public class WeightDateTuple {
-    public float weight_kg;
+    @ColumnInfo(name = "weight_kg")
+    public float weightKg;
     public String date;
 }

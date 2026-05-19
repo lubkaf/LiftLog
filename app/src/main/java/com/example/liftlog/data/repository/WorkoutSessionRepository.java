@@ -53,16 +53,6 @@ public class WorkoutSessionRepository {
         return sessionDao.getLastSession();
     }
 
-    public float getTotalVolumeForSession(int sessionId) {
-        // Wywoływać tylko z wątku tła
-        return setDao.getTotalVolumeForSession(sessionId);
-    }
-
-    public float getPersonalRecord(int exerciseId) {
-        // Wywoływać tylko z wątku tła
-        return setDao.getPersonalRecord(exerciseId);
-    }
-
     public LiveData<List<SessionSet>> getSetsForSession(int sessionId) {
         return setDao.getSetsForSession(sessionId);
     }
