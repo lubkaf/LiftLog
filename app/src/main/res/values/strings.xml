@@ -70,6 +70,8 @@
     <string name="workout_no_exercises">Brak ćwiczeń w planie</string>
     <string name="workout_validation_error">Wpisz poprawny ciężar i powtórzenia</string>
     <string name="workout_done_sets">Zapisane serie</string>
+    <string name="workout_sets_count">%1$d serii</string>
+    <string name="workout_add_exercise">Dodaj ćwiczenie</string>
 
     <!-- Podsumowanie -->
     <string name="summary_title">Podsumowanie</string>

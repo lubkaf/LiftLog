@@ -29,6 +29,7 @@ public class PlanEditFragment extends Fragment {
     private PlanExerciseAdapter adapter;
     private TextInputEditText editName;
     private TextView textEmpty;
+    // Flaga przeżywa nawigację (instancja Fragmentu nie jest niszczona przy backstacku)
     private boolean nameInitialized = false;
 
     @Nullable
@@ -52,6 +53,7 @@ public class PlanEditFragment extends Fragment {
 
         adapter = new PlanExerciseAdapter(position -> {
             adapter.removeAt(position);
+            viewModel.removeExercise(position);
             updateEmptyState();
         });
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -61,7 +63,7 @@ public class PlanEditFragment extends Fragment {
         btnAdd.setOnClickListener(v -> openLibraryPicker());
         btnSave.setOnClickListener(v -> {
             String name = editName.getText() == null ? "" : editName.getText().toString();
-            if (!viewModel.save(name, adapter.snapshot())) {
+            if (!viewModel.save(name)) {
                 Toast.makeText(requireContext(), R.string.planedit_save_error,
                         Toast.LENGTH_LONG).show();
             }
@@ -73,19 +75,19 @@ public class PlanEditFragment extends Fragment {
                     if (exId > 0) viewModel.requestAddExercise(exId);
                 });
 
-        viewModel.getInitial().observe(getViewLifecycleOwner(), data -> {
-            if (data == null || nameInitialized) return;
+        // Nazwa planu — ustawiana jednorazowo; nameInitialized przeżywa nawigację na backstacku
+        viewModel.getPlanName().observe(getViewLifecycleOwner(), name -> {
+            if (name == null || nameInitialized) return;
             nameInitialized = true;
-            editName.setText(data.name);
-            adapter.setItems(data.rows);
+            editName.setText(name);
+        });
+
+        // Lista ćwiczeń — ViewModel jest jedynym źródłem prawdy; odtwarza pełny stan po powrocie
+        viewModel.getCurrentRows().observe(getViewLifecycleOwner(), rows -> {
+            adapter.setItems(rows);
             updateEmptyState();
         });
-        viewModel.getExerciseAdded().observe(getViewLifecycleOwner(), row -> {
-            if (row == null) return;
-            adapter.addItem(row);
-            updateEmptyState();
-            viewModel.consumeExerciseAdded();
-        });
+
         viewModel.getSaved().observe(getViewLifecycleOwner(), saved -> {
             if (Boolean.TRUE.equals(saved)) {
                 NavHostFragment.findNavController(this).popBackStack();
@@ -116,6 +118,7 @@ public class PlanEditFragment extends Fragment {
                 int from = viewHolder.getBindingAdapterPosition();
                 int to = target.getBindingAdapterPosition();
                 adapter.moveItem(from, to);
+                viewModel.moveExercise(from, to);
                 return true;
             }
 

@@ -86,6 +86,10 @@ public class ActiveWorkoutManager {
         isActive = false;
     }
 
+    public void removeSet(SessionSet set) {
+        pendingSets.remove(set);
+    }
+
     public List<SessionSet> getCurrentSets() {
         return Collections.unmodifiableList(pendingSets);
     }

@@ -18,26 +18,20 @@ import com.example.liftlog.data.repository.TrainingPlanRepository;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlanEditViewModel extends AndroidViewModel {
-
-    public static class InitialData {
-        public final String name;
-        public final List<PlanExerciseRow> rows;
-
-        public InitialData(String name, List<PlanExerciseRow> rows) {
-            this.name = name;
-            this.rows = rows;
-        }
-    }
 
     private final TrainingPlanRepository repository;
     private final ExerciseDao exerciseDao;
     private final PlanExerciseDao planExerciseDao;
 
-    private final MutableLiveData<InitialData> initial = new MutableLiveData<>(null);
-    private final MutableLiveData<PlanExerciseRow> exerciseAdded = new MutableLiveData<>(null);
+    // Kanonalna lista ćwiczeń — obiekty współdzielone z adapterem (TextWatcher mutuje je bezpośrednio)
+    private final List<PlanExerciseRow> rows = new ArrayList<>();
+
+    private final MutableLiveData<String> planName = new MutableLiveData<>(null);
+    private final MutableLiveData<List<PlanExerciseRow>> currentRows = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Boolean> saved = new MutableLiveData<>(false);
 
     private int planId = -1;
@@ -52,42 +46,37 @@ public class PlanEditViewModel extends AndroidViewModel {
         planExerciseDao = db.planExerciseDao();
     }
 
-    public LiveData<InitialData> getInitial() {
-        return initial;
-    }
-
-    public LiveData<PlanExerciseRow> getExerciseAdded() {
-        return exerciseAdded;
-    }
-
-    public LiveData<Boolean> getSaved() {
-        return saved;
-    }
+    public LiveData<String> getPlanName() { return planName; }
+    public LiveData<List<PlanExerciseRow>> getCurrentRows() { return currentRows; }
+    public LiveData<Boolean> getSaved() { return saved; }
 
     public void load(int planId) {
         if (loaded) return;
         loaded = true;
         this.planId = planId;
         if (planId <= 0) {
-            initial.postValue(new InitialData("", new ArrayList<>()));
+            planName.postValue("");
+            currentRows.postValue(new ArrayList<>());
             return;
         }
         AppDatabase.DB_EXECUTOR.execute(() -> {
             TrainingPlan plan = AppDatabase.getInstance(getApplication())
                     .trainingPlanDao().getById(planId);
             if (plan == null) {
-                initial.postValue(new InitialData("", new ArrayList<>()));
+                planName.postValue("");
+                currentRows.postValue(new ArrayList<>());
                 return;
             }
             createdAt = plan.createdAt;
             List<PlanExercise> pes = planExerciseDao.getExercisesForPlanSync(planId);
-            List<PlanExerciseRow> mapped = new ArrayList<>(pes.size());
+            rows.clear();
             for (PlanExercise pe : pes) {
                 Exercise ex = exerciseDao.getById(pe.exerciseId);
-                mapped.add(new PlanExerciseRow(pe.id, pe.exerciseId,
+                rows.add(new PlanExerciseRow(pe.id, pe.exerciseId,
                         ex == null ? "?" : ex.name, pe.sets, pe.reps));
             }
-            initial.postValue(new InitialData(plan.name, mapped));
+            planName.postValue(plan.name);
+            currentRows.postValue(new ArrayList<>(rows));
         });
     }
 
@@ -96,17 +85,26 @@ public class PlanEditViewModel extends AndroidViewModel {
             Exercise ex = exerciseDao.getById(exerciseId);
             PlanExerciseRow row = new PlanExerciseRow(0, exerciseId,
                     ex == null ? "?" : ex.name, 3, 10);
-            exerciseAdded.postValue(row);
+            rows.add(row);
+            currentRows.postValue(new ArrayList<>(rows));
         });
     }
 
-    public void consumeExerciseAdded() {
-        exerciseAdded.setValue(null);
+    // Wywoływać z wątku UI, po tym jak adapter już usunął element wizualnie
+    public void removeExercise(int position) {
+        if (position < 0 || position >= rows.size()) return;
+        rows.remove(position);
     }
 
-    public boolean save(String name, List<PlanExerciseRow> rows) {
+    // Wywoływać z wątku UI, po tym jak adapter już przesunął element wizualnie
+    public void moveExercise(int from, int to) {
+        if (from < 0 || to < 0 || from >= rows.size() || to >= rows.size()) return;
+        Collections.swap(rows, from, to);
+    }
+
+    public boolean save(String name) {
         if (name == null || name.trim().isEmpty()) return false;
-        if (rows == null || rows.isEmpty()) return false;
+        if (rows.isEmpty()) return false;
 
         TrainingPlan plan = new TrainingPlan();
         plan.id = (planId > 0) ? planId : 0;

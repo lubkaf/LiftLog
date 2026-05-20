@@ -39,14 +39,11 @@ public class ActiveWorkoutViewModel extends AndroidViewModel {
     private final AppDatabase db;
 
     private final MutableLiveData<List<ExerciseEntry>> exercises = new MutableLiveData<>(Collections.emptyList());
-    private final MutableLiveData<Integer> currentIdx = new MutableLiveData<>(0);
-    private final MutableLiveData<Integer> currentSetNumber = new MutableLiveData<>(1);
-    private final MutableLiveData<List<SessionSet>> setsForCurrent = new MutableLiveData<>(Collections.emptyList());
+    private final MutableLiveData<List<SessionSet>> allSets = new MutableLiveData<>(Collections.emptyList());
     private final MutableLiveData<Integer> restRemaining = new MutableLiveData<>(0);
     private final MutableLiveData<Boolean> finished = new MutableLiveData<>(false);
 
     private CountDownTimer timer;
-    private int pickedExerciseId = -1;
     private int planId = -1;
     private boolean initialized = false;
 
@@ -58,9 +55,7 @@ public class ActiveWorkoutViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<ExerciseEntry>> getExercises() { return exercises; }
-    public LiveData<Integer> getCurrentIdx() { return currentIdx; }
-    public LiveData<Integer> getCurrentSetNumber() { return currentSetNumber; }
-    public LiveData<List<SessionSet>> getSetsForCurrent() { return setsForCurrent; }
+    public LiveData<List<SessionSet>> getAllSets() { return allSets; }
     public LiveData<Integer> getRestRemaining() { return restRemaining; }
     public LiveData<Boolean> getFinished() { return finished; }
     public LiveData<List<Exercise>> getAllExercisesForPicker() { return exerciseDao.getAllExercises(); }
@@ -71,10 +66,8 @@ public class ActiveWorkoutViewModel extends AndroidViewModel {
         initialized = true;
         this.planId = planId;
         AppDatabase.DB_EXECUTOR.execute(() -> {
-            // Po zmianie w ActiveWorkoutManager startWorkout jest no-op gdy isActive==true.
-            // Wyczyszczamy stan na wszelki wypadek — jeśli poprzedni trening został porzucony
-            // (np. force-close apki), nowa sesja musi zacząć się od zera.
             manager.discardWorkout();
+            allSets.postValue(Collections.emptyList());
             if (planId > 0) {
                 TrainingPlan plan = db.trainingPlanDao().getById(planId);
                 manager.startWorkout(plan);
@@ -86,55 +79,50 @@ public class ActiveWorkoutViewModel extends AndroidViewModel {
                             ex == null ? "?" : ex.name, pe.sets));
                 }
                 exercises.postValue(entries);
-                currentIdx.postValue(0);
-                currentSetNumber.postValue(1);
-                refreshSetsForCurrent(entries, 0);
             } else {
                 manager.startWorkout();
-                exercises.postValue(Collections.emptyList());
-                currentIdx.postValue(0);
-                currentSetNumber.postValue(1);
-                setsForCurrent.postValue(Collections.emptyList());
+                exercises.postValue(new ArrayList<>());
             }
         });
     }
 
-    public void setPickedExercise(int exerciseId) {
-        pickedExerciseId = exerciseId;
+    // Dla trybu quickstart: dodaje ćwiczenie do listy (nie zastępuje)
+    public void addPickedExercise(int exerciseId) {
         AppDatabase.DB_EXECUTOR.execute(() -> {
             Exercise ex = exerciseDao.getById(exerciseId);
-            ExerciseEntry entry = new ExerciseEntry(exerciseId,
-                    ex == null ? "?" : ex.name, 99);
-            exercises.postValue(Collections.singletonList(entry));
-            currentIdx.postValue(0);
-            currentSetNumber.postValue(1);
-            refreshSetsForCurrent(Collections.singletonList(entry), 0);
+            if (ex == null) return;
+            List<ExerciseEntry> current = exercises.getValue();
+            if (current == null) current = new ArrayList<>();
+            // Nie dodawaj duplikatów
+            for (ExerciseEntry e : current) {
+                if (e.exerciseId == exerciseId) return;
+            }
+            List<ExerciseEntry> updated = new ArrayList<>(current);
+            updated.add(new ExerciseEntry(exerciseId, ex.name, 99));
+            exercises.postValue(updated);
         });
     }
 
-    public boolean logSet(float weightKg, int repsDone) {
-        List<ExerciseEntry> list = exercises.getValue();
-        Integer idx = currentIdx.getValue();
-        Integer setNo = currentSetNumber.getValue();
-        if (list == null || list.isEmpty() || idx == null || setNo == null) return false;
-        if (idx >= list.size()) return false;
-        ExerciseEntry entry = list.get(idx);
-
-        manager.logSet(entry.exerciseId, setNo, weightKg, repsDone);
-        currentSetNumber.setValue(setNo + 1);
-        refreshSetsForCurrent(list, idx);
-        return true;
+    // exerciseId podany jawnie — setNumber liczony na podstawie allSets
+    public void deleteSet(SessionSet set) {
+        manager.removeSet(set);
+        allSets.setValue(new ArrayList<>(manager.getCurrentSets()));
     }
 
-    public void nextExercise() {
-        List<ExerciseEntry> list = exercises.getValue();
-        Integer idx = currentIdx.getValue();
-        if (list == null || idx == null) return;
-        if (idx + 1 >= list.size()) return;
-        currentIdx.setValue(idx + 1);
-        currentSetNumber.setValue(1);
-        cancelRestTimer();
-        refreshSetsForCurrent(list, idx + 1);
+    public void setExercisesOrder(List<ExerciseEntry> ordered) {
+        exercises.setValue(new ArrayList<>(ordered));
+    }
+
+    public void logSet(int exerciseId, float weightKg, int repsDone) {
+        List<SessionSet> current = allSets.getValue();
+        int setNo = 1;
+        if (current != null) {
+            for (SessionSet s : current) {
+                if (s.exerciseId == exerciseId) setNo++;
+            }
+        }
+        manager.logSet(exerciseId, setNo, weightKg, repsDone);
+        allSets.setValue(new ArrayList<>(manager.getCurrentSets()));
     }
 
     public void startRestTimer(int seconds) {
@@ -176,18 +164,5 @@ public class ActiveWorkoutViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
         cancelRestTimer();
-    }
-
-    private void refreshSetsForCurrent(List<ExerciseEntry> list, int idx) {
-        if (idx < 0 || idx >= list.size()) {
-            setsForCurrent.postValue(Collections.emptyList());
-            return;
-        }
-        int exId = list.get(idx).exerciseId;
-        List<SessionSet> filtered = new ArrayList<>();
-        for (SessionSet s : manager.getCurrentSets()) {
-            if (s.exerciseId == exId) filtered.add(s);
-        }
-        setsForCurrent.postValue(filtered);
     }
 }
