@@ -98,13 +98,23 @@ public class SessionDetailFragment extends Fragment {
     }
 
     private void configureChart() {
+        int textColor = getResources().getColor(R.color.text_primary, null);
+        int gridColor = getResources().getColor(R.color.glass_stroke_soft, null);
+
         chart.getDescription().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
         chart.setNoDataText("");
+        chart.setDrawGridBackground(false);
+        chart.getLegend().setTextColor(textColor);
+
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
+        xAxis.setTextColor(textColor);
+
+        chart.getAxisLeft().setTextColor(textColor);
+        chart.getAxisLeft().setGridColor(gridColor);
     }
 
     private void subscribeToProgress(@Nullable Integer exerciseId) {
@@ -145,6 +155,7 @@ public class SessionDetailFragment extends Fragment {
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
         set.setValueTextSize(10f);
+        set.setValueTextColor(getResources().getColor(R.color.text_primary, null));
 
         chart.setData(new LineData(set));
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateLabels));

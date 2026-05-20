@@ -21,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/bg_card"
-            android:padding="16dp">
+            android:background="@drawable/bg_glass_strong"
+            android:padding="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"

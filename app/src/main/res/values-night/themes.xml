@@ -1,11 +1,42 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Base.Theme.LiftLog" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/brand_accent</item>
         <item name="colorPrimaryDark">@color/brand_primary_dark</item>
-        <item name="colorOnPrimary">@color/brand_primary_dark</item>
-        <item name="colorSecondary">@color/brand_accent</item>
-        <item name="colorOnSecondary">@color/brand_primary_dark</item>
-        <item name="android:windowBackground">@color/brand_primary_dark</item>
-        <item name="colorSurface">@color/brand_surface_dark</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+        <item name="colorPrimaryContainer">@color/accent_soft</item>
+        <item name="colorOnPrimaryContainer">@color/text_primary</item>
+        <item name="colorSecondary">@color/brand_primary</item>
+        <item name="colorOnSecondary">@color/on_accent</item>
+        <item name="colorSecondaryContainer">@color/accent_soft</item>
+        <item name="colorOnSecondaryContainer">@color/text_primary</item>
+
+        <item name="android:windowBackground">@drawable/bg_app_gradient</item>
+        <item name="colorSurface">@color/surface_glass</item>
+        <item name="colorSurfaceVariant">@color/surface_glass_high</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="android:colorBackground">@color/bg_grad_top</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorOutline">@color/glass_stroke</item>
+        <item name="colorOutlineVariant">@color/glass_stroke_soft</item>
+
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
+
+        <item name="materialButtonStyle">@style/Widget.LiftLog.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.LiftLog.Button.Outlined</item>
+        <item name="extendedFloatingActionButtonStyle">@style/Widget.LiftLog.FAB</item>
+        <item name="floatingActionButtonStyle">@style/Widget.LiftLog.FAB.Regular</item>
+        <item name="bottomNavigationStyle">@style/Widget.LiftLog.BottomNav</item>
+        <item name="materialCardViewStyle">@style/Widget.LiftLog.Card</item>
     </style>
+
 </resources>

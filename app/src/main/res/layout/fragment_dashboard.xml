@@ -58,37 +58,49 @@
                     android:id="@+id/btn_plans"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
-                    android:layout_height="96dp"
+                    android:layout_height="112dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:text="@string/dashboard_plans" />
+                    android:text="@string/dashboard_plans"
+                    app:icon="@drawable/ic_edit_24"
+                    app:iconGravity="top"
+                    app:iconTint="@color/brand_accent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_history"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
-                    android:layout_height="96dp"
+                    android:layout_height="112dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:text="@string/dashboard_history" />
+                    android:text="@string/dashboard_history"
+                    app:icon="@drawable/ic_history_24"
+                    app:iconGravity="top"
+                    app:iconTint="@color/brand_accent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_library"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
-                    android:layout_height="96dp"
+                    android:layout_height="112dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:text="@string/dashboard_library" />
+                    android:text="@string/dashboard_library"
+                    app:icon="@drawable/ic_library_24"
+                    app:iconGravity="top"
+                    app:iconTint="@color/brand_accent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_one_rm"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
-                    android:layout_height="96dp"
+                    android:layout_height="112dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:text="@string/dashboard_one_rm" />
+                    android:text="@string/dashboard_one_rm"
+                    app:icon="@drawable/ic_calculator_24"
+                    app:iconGravity="top"
+                    app:iconTint="@color/brand_accent" />
             </GridLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

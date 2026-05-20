@@ -3,21 +3,54 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="brand_primary">#1F2937</color>
-    <color name="brand_primary_dark">#111827</color>
-    <color name="brand_on_primary">#FFFFFF</color>
-    <color name="brand_accent">#F59E0B</color>
-    <color name="brand_accent_dark">#B45309</color>
-    <color name="brand_surface">#F9FAFB</color>
-    <color name="brand_surface_dark">#1F2937</color>
+    <!-- ===== Aurora backdrop (the "liquid" the glass refracts) ===== -->
+    <color name="bg_grad_top">#171336</color>
+    <color name="bg_grad_mid">#241A55</color>
+    <color name="bg_grad_bottom">#0F2150</color>
+    <color name="glow_violet">#664B2EA8</color>
+    <color name="glow_blue">#4D2E6BD9</color>
+    <color name="glow_teal">#3322C2C7</color>
 
-    <color name="text_primary">#111827</color>
-    <color name="text_secondary">#6B7280</color>
-    <color name="divider">#E5E7EB</color>
+    <!-- ===== Glass surfaces (white translucency over the backdrop) ===== -->
+    <color name="glass_fill">#2EFFFFFF</color>
+    <color name="glass_fill_low">#12FFFFFF</color>
+    <color name="glass_fill_strong_top">#42FFFFFF</color>
+    <color name="glass_fill_strong_bottom">#1FFFFFFF</color>
+    <color name="glass_fill_soft">#1AFFFFFF</color>
+    <color name="glass_card_solid">#26FFFFFF</color>
+    <color name="glass_stroke">#5CFFFFFF</color>
+    <color name="glass_stroke_soft">#26FFFFFF</color>
+    <color name="glass_ripple">#33FFFFFF</color>
 
-    <color name="chart_line">#F59E0B</color>
-    <color name="pr_badge_bg">#FEF3C7</color>
-    <color name="pr_badge_text">#92400E</color>
-    <color name="custom_badge_bg">#DBEAFE</color>
-    <color name="custom_badge_text">#1E40AF</color>
+    <!-- Opaque surfaces for dialogs / menus / spinner popups -->
+    <color name="surface_glass">#221B4A</color>
+    <color name="surface_glass_high">#2D2560</color>
+    <color name="bar_glass">#EB1A1540</color>
+
+    <!-- ===== Brand / accent ===== -->
+    <color name="brand_primary">#8B9CFF</color>
+    <color name="brand_primary_dark">#10204F</color>
+    <color name="brand_on_primary">#1A1330</color>
+    <color name="brand_accent">#FBBF24</color>
+    <color name="brand_accent_dark">#F59E0B</color>
+    <color name="brand_surface">#221B4A</color>
+    <color name="brand_surface_dark">#171336</color>
+    <color name="accent_soft">#33FBBF24</color>
+    <color name="on_accent">#1A1330</color>
+
+    <!-- ===== Text ===== -->
+    <color name="text_primary">#F4F5FF</color>
+    <color name="text_secondary">#ABB1D8</color>
+    <color name="text_hint">#8086B0</color>
+    <color name="divider">#29FFFFFF</color>
+
+    <!-- ===== Accents on glass ===== -->
+    <color name="chart_line">#FBBF24</color>
+    <color name="pr_badge_bg">#33FBBF24</color>
+    <color name="pr_badge_text">#FCE3B0</color>
+    <color name="custom_badge_bg">#335B8DEF</color>
+    <color name="custom_badge_text">#C7DBFF</color>
+
+    <!-- Bottom nav unselected -->
+    <color name="nav_unselected">#9AA0C8</color>
 </resources>

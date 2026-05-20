@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base diagonal aurora -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="@color/bg_grad_top"
+                android:centerColor="@color/bg_grad_mid"
+                android:endColor="@color/bg_grad_bottom" />
+        </shape>
+    </item>
+
+    <!-- Violet glow, top-left -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="640dp"
+                android:centerX="0.12"
+                android:centerY="0.02"
+                android:startColor="@color/glow_violet"
+                android:endColor="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Blue glow, mid-right -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="720dp"
+                android:centerX="1.05"
+                android:centerY="0.32"
+                android:startColor="@color/glow_blue"
+                android:endColor="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Teal glow, bottom-left -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="560dp"
+                android:centerX="0.0"
+                android:centerY="1.0"
+                android:startColor="@color/glow_teal"
+                android:endColor="@android:color/transparent" />
+        </shape>
+    </item>
+
+</layer-list>
